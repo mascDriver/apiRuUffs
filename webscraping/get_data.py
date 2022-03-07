@@ -4,7 +4,7 @@ from urllib.error import HTTPError
 
 def get_value_by_position(lista: list, position: int):
     try:
-        return lista[position].text.replace('\n', '')
+        return lista[position].text.replace('\n', '').strip()
     except IndexError:
         return ''
 
@@ -28,7 +28,7 @@ def prepare_data(bs: BeautifulSoup):
     for conteudo_cardapio in conteudo_cardapios:
         cardapio_html = conteudo_cardapio.findChildren('td')
         cardapio = {
-            'semana': linhas[0].findChildren('p')[11].text,
+            'semana': conteudo_cardapio.find_previous('p').text,
             'cardapio' : [
                 {
                     'dia': get_value_by_position(cardapio_html, key),
