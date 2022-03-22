@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 from urllib.error import HTTPError
+from unicodedata import normalize
 
 def get_value_by_position(lista: list, position: int):
     try:
@@ -8,12 +9,17 @@ def get_value_by_position(lista: list, position: int):
     except IndexError:
         return ''
 
+
+def normalize_url(url: str):
+    return normalize('NFKD', url).encode('ASCII','ignore').decode('ASCII').lower().replace(' ', '-')
+
+
 def get_cardapio(campus: str):
     try:
         if campus == 'realeza':
-            html = urlopen(f"https://www.uffs.edu.br/campi/{campus}/restaurante_universitario/apresentacao-do-ru")
+            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
         else:
-            html = urlopen(f"https://www.uffs.edu.br/campi/{campus}/restaurante_universitario")
+            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
     except HTTPError:
         return False
     if html.code != 200:

@@ -37,7 +37,7 @@ async def ver_cardapio_campus_dia(campus: str, dia: int, response: Response):
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"message": f"Campus '{campus}' não encontrado."}
     cardapios = prepare_data(bs)
-    if dia not in range(0,4):
+    if dia not in range(0,5):
         response.status_code = status.HTTP_400_BAD_REQUEST
         return {"message": f"Informe um dia entre 0 - 4."}
     cardapio = get_cardapio_dia(dia, cardapios)
