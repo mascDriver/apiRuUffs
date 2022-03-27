@@ -1,0 +1,7 @@
+.class
+.o
+.DS_Store
+Thumbs.db
+ehthumbs.db
+node_modules/
+.vs/
