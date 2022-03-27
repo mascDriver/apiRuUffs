@@ -3,7 +3,7 @@ requires = ["flit"]
 build-backend = "flit.buildapi"
 
 [tool.flit.metadata]
-module = "fastapi"
+module = "apiRuUffs"
 author = "Diogo Baltazar"
 author-email = "diogobaltazardonascimento@outlook.com"
 home-page = "https://github.com/mascDriver/apiRuUffs"
