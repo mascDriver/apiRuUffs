@@ -2,6 +2,7 @@
     <img width="800" src=".github/logo.png" title="Logo do projeto"><br />
     <img src="https://img.shields.io/maintenance/yes/2022?style=for-the-badge" title="Status do projeto">
     <img src="https://img.shields.io/github/workflow/status/mascDriver/apiRuUffs/build?label=Build&logo=github&logoColor=white&style=for-the-badge" title="Status do build">
+    <img src="https://api.netlify.com/api/v1/badges/24a1f036-5a43-4eb9-9a0a-5b2e27a438df/deploy-status" title="Status do build">
 </p>
 
 # Título

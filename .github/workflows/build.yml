@@ -47,3 +47,6 @@ jobs:
           production-branch: master
           github-token: ${{ secrets.MY_REPO_SECRET  }}
           enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
