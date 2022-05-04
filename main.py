@@ -19,9 +19,6 @@ async def home():
 
 @app.get("/campus/{campus}")
 async def ver_cardapio_campus(campus: str, response: Response):
-    if campus == 'erechim':
-        response.status_code = status.HTTP_302_FOUND
-        return {"message": f"Campus {campus} está em desenvolvimento."}
     html = get_cardapio(campus)
     if not html:
         response.status_code = status.HTTP_404_NOT_FOUND
