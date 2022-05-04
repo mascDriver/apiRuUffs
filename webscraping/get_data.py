@@ -1,7 +1,9 @@
-from bs4 import BeautifulSoup
-from urllib.request import urlopen
+from requests_html import HTML, HTMLSession
 from urllib.error import HTTPError
 from unicodedata import normalize
+from requests.exceptions import ChunkedEncodingError
+from websockets.exceptions import ConnectionClosed
+
 
 def get_value_by_position(lista: list, position: int):
     try:
@@ -17,25 +19,40 @@ def normalize_url(url: str):
 def get_cardapio(campus: str):
     try:
         if campus == 'realeza':
-            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
+            url = f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru"
+        elif campus == 'passo-fundo':
+            url = f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante-universitario"
         else:
-            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
+            url = f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario"
+
+        session = HTMLSession()
+        response = session.get(url, allow_redirects=False)
+
     except HTTPError:
         return False
-    if html.code != 200:
+    except ChunkedEncodingError:
         return False
-    return BeautifulSoup(html, 'html.parser')
+    except ConnectionClosed:
+        return False
+
+    if response.status_code != 200:
+        return False
+
+    session.close()
+    return response.html
 
 
-def prepare_data(bs: BeautifulSoup):
-    linhas = bs.find_all('section', {'id':'content-core'})
-    conteudo_cardapios = linhas[0].findChildren('table') or linhas
+def prepare_data(html: HTML):
+    conteudo_cardapios = html.find('table') or html.find('#content-core', first=True)
+    semanas = iter(html.find('#content-core p', containing='Semana ')[::-1])
     cardapios = list()
+
     for conteudo_cardapio in conteudo_cardapios:
-        cardapio_html = conteudo_cardapio.findChildren('td')
+        cardapio_html = conteudo_cardapio.find('td')
+
         cardapio = {
-            'semana': conteudo_cardapio.find_previous('p').text,
-            'cardapio' : [
+            'semana': next(semanas).text,
+            'cardapio': [
                 {
                     'dia': get_value_by_position(cardapio_html, key),
                     'salada': get_value_by_position(cardapio_html, 5+key),
@@ -48,11 +65,12 @@ def prepare_data(bs: BeautifulSoup):
                     'mistura': get_value_by_position(cardapio_html, 40+key),
                     'mistura_vegana': get_value_by_position(cardapio_html, 45+key),
                     'sobremesa': get_value_by_position(cardapio_html, 50+key),
-                }for key in range(0, 5)
+                } for key in range(0, 5)
             ]
         }
         cardapios.append(cardapio)
     return cardapios
+
 
 def get_cardapio_dia(dia: int, cardapios: list):
     return list(map(lambda x: x['cardapio'][dia], cardapios))

@@ -1,2 +1,2 @@
 fastapi
-bs4
+requests-html=0.10.0
