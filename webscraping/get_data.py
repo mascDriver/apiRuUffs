@@ -17,9 +17,13 @@ def normalize_url(url: str):
 def get_cardapio(campus: str):
     try:
         if campus == 'realeza':
-            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
+            url = f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru"
+        elif campus == 'passo-fundo':
+            url = f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante-universitario"
         else:
-            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
+            url = f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario"
+        html = urlopen(url)
+
     except HTTPError:
         return False
     if html.code != 200:
