@@ -1,2 +1,6 @@
-fastapi
-bs4
+fastapi==0.78.0
+bs4==0.0.1
+fastapi-cache2==0.1.8
+aioredis==2.0.1
+uvicorn==0.17.6
+gunicorn==20.1.0
