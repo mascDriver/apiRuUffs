@@ -4,3 +4,4 @@ fastapi-cache2==0.1.8
 aioredis==2.0.1
 uvicorn==0.17.6
 gunicorn==20.1.0
+python-dotenv
