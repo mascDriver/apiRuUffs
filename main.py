@@ -1,6 +1,7 @@
 import os
 
 import aioredis
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi import status
 from fastapi_cache import FastAPICache
@@ -9,6 +10,8 @@ from fastapi_cache.decorator import cache
 from starlette.responses import Response
 
 from webscraping.get_data import get_cardapio, prepare_data, get_cardapio_dia
+
+load_dotenv()  # take environment variables from .env.
 
 app = FastAPI(
     title='Api R.U UFFS',
@@ -23,7 +26,8 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.from_url(f"redis://{os.environ['REDIS_URL']}", encoding="utf8", decode_responses=True)
+    redis = aioredis.from_url(f'{os.environ.get("REDIS_URL", "redis://localhost")}', encoding="utf8",
+                              decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 
