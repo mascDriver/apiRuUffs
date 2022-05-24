@@ -1,0 +1,1 @@
+{"id":"8fa583fe-08bf-4142-aab8-4b9f97767a29","space":19127,"runtime":"python3.9","name":"apiRuUffs","path":"zzumgq","project":"b07sd9u2","account":"144798365827","region":"sa-east-1","deps":["fastapi==0.78.0","bs4==0.0.1","fastapi-cache2==0.1.8","aioredis==2.0.1","uvicorn==0.17.6","gunicorn==20.1.0"],"envs":null,"public":true,"log_level":"debug","cron":""}
