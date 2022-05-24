@@ -1,3 +1,5 @@
+import os
+
 import aioredis
 from fastapi import FastAPI
 from fastapi import status
@@ -21,7 +23,7 @@ app = FastAPI(
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    redis = aioredis.from_url(f"redis://{os.environ['REDIS_URL']}", encoding="utf8", decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 
