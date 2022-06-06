@@ -8,7 +8,7 @@
 # Título
 
 Projeto que disponibiliza em formato de api o cardapio dos restaurantes universitarios UFFS.
-Esse projeto já está em produção e você pode ver os endpoints em: https://zzumgq.deta.dev/docs
+Esse projeto já está em produção e você pode ver os endpoints em: https://zzumgq.deta.dev/docs ou https://api-ru-uffs.herokuapp.com/docs
 
 [comment]: <> (> **IMPORTANTE:** coloque aqui alguma mensagem que é muito relevante aos usuários do projeto, se for o caso.)
 
