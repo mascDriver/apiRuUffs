@@ -1,8 +1,6 @@
 from bs4 import BeautifulSoup
-from urllib.request import urlopen
-from urllib.error import HTTPError
 from unicodedata import normalize
-from urllib.error import URLError
+import httpx
 
 def get_value_by_position(lista: list, position: int):
     try:
@@ -18,19 +16,17 @@ def normalize_url(url: str):
 def get_cardapio(campus: str):
     try:
         if campus == 'realeza':
-            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
+            html = httpx.get(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
         else:
-            html = urlopen(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
-    except HTTPError:
-        return False
-    except URLError:
+            html = httpx.get(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
+    except httpx.HTTPError:
         if campus == 'realeza':
-            html = urlopen(f"http://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
+            html = httpx.get(f"http://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru")
         else:
-            html = urlopen(f"http://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
-    if html.code != 200:
+            html = httpx.get(f"http://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario")
+    if html.status_code != 200:
         return False
-    return BeautifulSoup(html, 'html.parser')
+    return BeautifulSoup(html.text, 'html.parser')
 
 
 def prepare_data(bs: BeautifulSoup):
