@@ -21,6 +21,7 @@ app = FastAPI(
         "url": "https://github.com/mascDriver",
         "email": "diogobaltazardonascimento@outlook.com",
     },
+    redoc_url='/'
 )
 
 
@@ -31,10 +32,10 @@ async def startup():
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 
-@app.get("/")
-@cache(expire=86400)
-async def home():
-    return dict(message=f"Bem vindo a api ru uffs, acesse {app.docs_url} para mais informações")
+# @app.get("/")
+# @cache(expire=86400)
+# async def home():
+#     return dict(message=f"Bem vindo a api ru uffs, acesse {app.docs_url} para mais informações")
 
 
 @app.get("/campus/{campus}")
