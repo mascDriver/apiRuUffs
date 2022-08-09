@@ -36,10 +36,10 @@ def get_cardapio(campus: str):
         try:
             if campus == 'realeza':
                 html = httpx.get(
-                    f"http://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru",
+                    f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario/apresentacao-do-ru",
                     proxies=proxies)
             else:
-                html = httpx.get(f"http://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario",
+                html = httpx.get(f"https://www.uffs.edu.br/campi/{normalize_url(campus)}/restaurante_universitario",
                                  proxies=proxies)
         except httpx.HTTPError:
             return False
