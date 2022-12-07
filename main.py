@@ -28,7 +28,7 @@ app = FastAPI(
 @app.on_event("startup")
 async def startup():
     url = urlparse(os.environ.get("REDIS_TLS_URL"))
-    redis = aioredis.StrictRedis(host=url.hostname, port=url.port, username=url.username, password=url.password, ssl=True, ssl_cert_reqs=None)
+    redis = aioredis.StrictRedis(host=url.hostname, port=url.port, username=url.username, password=url.password)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
 
 
