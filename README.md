@@ -5,10 +5,10 @@
 <!--     <img src="https://api.netlify.com/api/v1/badges/24a1f036-5a43-4eb9-9a0a-5b2e27a438df/deploy-status" title="Status do build"> -->
 </p>
 
-# Título
+# Api of Ru UFFS
 
 Projeto que disponibiliza em formato de api o cardapio dos restaurantes universitarios UFFS. 
-Esse projeto já está em produção e você pode ver os endpoints em: https://zzumgq.deta.dev/docs ou https://api-ru-uffs.herokuapp.com/docs
+Esse projeto já está em produção e você pode ver os endpoints em: https://ru-uffs-api.mascdriver.com.br
 
 [comment]: <> (> **IMPORTANTE:** coloque aqui alguma mensagem que é muito relevante aos usuários do projeto, se for o caso.)
 
