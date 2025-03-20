@@ -1,0 +1,11 @@
+services:
+  server:
+    build: .
+    command: uvicorn main:app --host=0.0.0.0 --port=5000 --reload
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - TZ=America/Sao_Paulo
+      - NODE_RED_CREDENTIAL_SECRET=123
