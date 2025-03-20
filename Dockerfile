@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 # Copy project
 COPY . /app/
 
-CMD ["uvicorn", "main:app", "--bind", "::"]
+CMD ["hypercorn", "main:app", "--bind", "::"]
