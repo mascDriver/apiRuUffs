@@ -49,39 +49,32 @@ def get_cardapio(campus: str):
 
 
 def prepare_data(bs: BeautifulSoup):
-    linhas = bs.find_all('div', {'id': 'cardapioCarousel'})
-    conteudo_cardapios = linhas[0].find_all('div', {'class': 'carousel-item'})
-    cardapio = {
-        'semana': bs.find('div', {'class': 'cardapio-header'}).text,
-        'cardapio': []
-    }
-    for x, conteudo_cardapio in enumerate(conteudo_cardapios):
-        _, day, _, almoco, _, jantar = conteudo_cardapio.find_all(string=True)
-
-        itens = re.split(r'[\/\n]+| {2,}', almoco.replace('c/', 'com'))
-
-        # Remover espaços extras e itens vazios
-        itens = [item.strip() for item in itens if item.strip()]
-        data = {
-                    'dia': day,
-                    'salada': '',
-                    'salada1': '',
-                    'salada2': '',
-                    'graos': '',
-                    'graos1': '',
-                    'graos2': '',
-                    'acompanhamento': '',
-                    'mistura': '',
-                    'mistura_vegana': '',
-                    'sobremesa': '',
-                }
-        for key, value in enumerate(data.keys()):
-            if value == 'dia':
-                continue
-            data[value] = itens[key-1]
-        cardapio['cardapio'].append(data)
-    return cardapio
+    linhas = bs.find_all('div', {'id': 'texto'})
+    conteudo_cardapios = linhas[0].findChildren('table') or linhas
+    cardapios = list()
+    for conteudo_cardapio in conteudo_cardapios:
+        cardapio_html = conteudo_cardapio.findChildren('td')
+        cardapio = {
+            'semana': conteudo_cardapio.find_previous('p').text,
+            'cardapio': [
+                {
+                    'dia': get_value_by_position(cardapio_html, key),
+                    'salada': get_value_by_position(cardapio_html, 5 + key),
+                    'salada1': get_value_by_position(cardapio_html, 10 + key),
+                    'salada2': get_value_by_position(cardapio_html, 15 + key),
+                    'graos': get_value_by_position(cardapio_html, 20 + key),
+                    'graos1': get_value_by_position(cardapio_html, 25 + key),
+                    'graos2': get_value_by_position(cardapio_html, 30 + key),
+                    'acompanhamento': get_value_by_position(cardapio_html, 35 + key),
+                    'mistura': get_value_by_position(cardapio_html, 40 + key),
+                    'mistura_vegana': get_value_by_position(cardapio_html, 45 + key),
+                    'sobremesa': get_value_by_position(cardapio_html, 50 + key),
+                } for key in range(0, 5)
+            ]
+        }
+        cardapios.append(cardapio)
+    return cardapios
 
 
 def get_cardapio_dia(dia: int, cardapios: list):
-    return cardapios['cardapio'][dia]
+    return list(map(lambda x: x['cardapio'][dia], cardapios))
